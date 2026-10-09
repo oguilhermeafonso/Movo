@@ -30,7 +30,5 @@ Instead of overwhelming users with unnecessary features, Movo focuses on what ma
 Language: C
 Interface: Command-line interface (CLI)
 Version Control: Git & GitHub
-
 Less time managing finances. More clarity to make decisions.
-
 Developed by Guilherme Afonso as a personal software development and learning project.

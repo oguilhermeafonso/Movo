@@ -7,12 +7,12 @@ int main() {
     
     int choice = 0;
 
-    printf("Financial Manager\n");
-    printf("1 - Add Income\n");
-    printf("2 - Add Expense\n");
-    printf("3 - List Income\n");
-    printf("4 - List Expenses\n");
-    printf("5 - Exit\n");
+    printf("\nFinancial Manager");
+    printf("\n1 - Add Income");
+    printf("\n2 - Add Expense");
+    printf("\n3 - List Income");
+    printf("\n4 - List Expenses");
+    printf("\n5 - Exit");
 
     printf("\n\nEnter your choice: ");
     scanf("%d", &choice);
@@ -31,10 +31,10 @@ int main() {
             listExpenses();
             break;
         case 5:
-            printf("Exiting the program.\n");
+            printf("\nExiting the program.");
             return 0;
         default:
-            printf("Invalid choice. Please try again.\n");
+            printf("\nInvalid choice. Please try again.");
     }
 
 

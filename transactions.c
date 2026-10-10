@@ -2,14 +2,32 @@
 #include <stdlib.h>
 #include <string.h>
 #include "transactions.h"
+#include <math.h>
+#include <ctype.h>
 
-char dateValidation(const char *date) {
+void clearInputBuffer() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+}
+
+int dateValidation(const char *date) {
 
     //Date validation
         
-    if (date[2] != '-' || date[5] != '-' || strlen(date) != 10) {
+    if (strlen(date) != 10 || date[2] != '-' || date[5] != '-') {
         printf("\nInvalid date format. Please use MM-DD-YYYY.");
         return 1;
+    }
+
+    for (int i = 0; i < 10; i++) {
+        if (i == 2 || i == 5) {
+            continue;
+        }
+
+        if (!isdigit((unsigned char) date[i])) {
+            printf("\nInvalid date. Please use numeric digits.");
+            return 1;
+        }
     }
 
     int month = ((date[0] - '0') * 10) + date[1] - '0';
@@ -36,6 +54,19 @@ char dateValidation(const char *date) {
     return 0;
 }
 
+int moneyValidation(double amount) {
+    if (!isfinite(amount)) {
+        printf("\nInvalid input. Please enter a numeric value.");
+        return 1;
+    }
+
+    if (amount <= 0) {
+        printf("\nInvalid amount. Please enter a positive value.");
+        return 1;
+    }
+    return 0;
+}
+
 
 
 void addIncome() {
@@ -46,31 +77,47 @@ void addIncome() {
     printf("\nIncome of %.2f added successfully.", income);
 }
 
-
-
 void addExpense() {
 
 
     double expense;
-    printf("\nEnter expense amount: ");
-    scanf("%lf", &expense);
+    int moneyValidationResult = 1;
 
-    printf("\nEnter expense description:");
-    char description[100];
-    fgets(description, sizeof(description), stdin); 
+    do {
+        printf("\nEnter expense amount: ");
+
+        if(scanf("%lf", &expense) != 1) {
+            printf("\nInvalid input. Please enter a numeric value.");
+
+        } else {
+            moneyValidationResult = moneyValidation(expense);
+        }
+
+        clearInputBuffer();
+
+    } while (moneyValidationResult != 0);
+
     
-    char date[11];
+    printf("\nEnter expense description: ");
+    char description[100];
+    fgets(description, sizeof(description), stdin);
+
+    description[strcspn(description, "\n")] = '\0';
+    
+    char date[12];
     int validationResult = 1;
     
+
     do {
 
         printf("\nEnter date of expense (MM-DD-YYYY): ");
         fgets(date, sizeof(date), stdin);
 
+        //Date checking and removing newline character if present
         if (date[strlen(date) - 1] == '\n') {
         date[strlen(date) - 1] = '\0';
         }
-         
+        
         validationResult = dateValidation(date);
        
     } while (validationResult != 0);
